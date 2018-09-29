@@ -3,7 +3,6 @@ import React from 'react';
 class BlogPostList extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
 
   render() {
