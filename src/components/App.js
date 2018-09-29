@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route, Switch} from "react-router";
 import LoginForm from "./LoginForm";
-import BlogPostList from "./BlogPostList";
+import BlogPostListContainer from "./BlogPostListContainer";
 
 class App extends React.Component {
   render() {
@@ -10,7 +10,7 @@ class App extends React.Component {
         Hello!
         <Switch>
           <Route path="/login" component={LoginForm}/>
-          <Route path="/" component={BlogPostList}/>
+          <Route path="/" component={BlogPostListContainer}/>
         </Switch>
       </div>
     )
