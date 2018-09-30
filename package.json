@@ -21,7 +21,8 @@
     "redux-logger": "^3.0.1",
     "redux-thunk": "^2.3.0",
     "superagent": "^3.8.2",
-    "superagent-promise": "^1.1.0"
+    "superagent-promise": "^1.1.0",
+    "timeago.js": "^3.0.2"
   },
   "scripts": {
     "start": "cross-env PORT=4100 react-scripts start",

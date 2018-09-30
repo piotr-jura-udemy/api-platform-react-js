@@ -22,7 +22,7 @@ export const blogPostListReceived = (data) => ({
 export const blogPostListFetch = () => {
   return (dispatch) => {
     dispatch(blogPostListRequest());
-    return requests.get('/blog_osts')
+    return requests.get('/blog_posts')
       .then(response => dispatch(blogPostListReceived(response)))
       .catch(error => dispatch(blogPostListError(error)));
   }

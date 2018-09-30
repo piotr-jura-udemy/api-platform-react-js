@@ -1,4 +1,5 @@
 import React from 'react';
+import timeago from 'timeago.js';
 
 class BlogPostList extends React.Component {
   render() {
@@ -13,9 +14,18 @@ class BlogPostList extends React.Component {
     }
 
     return (<div>
-      <ul>
-        {posts && posts.map(post => (<li key={post.id}>{post.title}</li>))}
-      </ul>
+      {posts && posts.map(post => (
+        <div className="card mb-3 mt-3 shadow-sm" key={post.id}>
+          <div className="card-body">
+            <h3>{post.title}</h3>
+            <p className="card-text bordet-top">
+              <small className="text-muted">
+                {timeago().format(post.published)}
+              </small>
+            </p>
+          </div>
+        </div>
+      ))}
     </div>)
   }
 }
