@@ -7,7 +7,12 @@ import {
   BLOG_POST_LIST_REQUEST,
   BLOG_POST_RECEIVED,
   BLOG_POST_REQUEST,
-  BLOG_POST_UNLOAD, COMMENT_LIST_ERROR, COMMENT_LIST_RECEIVED, COMMENT_LIST_REQUEST, COMMENT_LIST_UNLOAD
+  BLOG_POST_UNLOAD,
+  COMMENT_LIST_ERROR,
+  COMMENT_LIST_RECEIVED,
+  COMMENT_LIST_REQUEST,
+  COMMENT_LIST_UNLOAD,
+  USER_LOGIN_SUCCESS
 } from "./constants";
 
 export const blogPostListRequest = () => ({
@@ -88,12 +93,20 @@ export const commentListFetch = (id) => {
   }
 };
 
+export const userLoginSuccess = (token, userId) => {
+  return {
+    type: USER_LOGIN_SUCCESS,
+    token,
+    userId
+  }
+};
+
 export const userLoginAttempt = (username, password) => {
   return (dispatch) => {
-    return requests.post('/login_check', {username, password}).then(
-      response => console.log(response)
+    return requests.post('/login_check', {username, password}, false).then(
+      response => dispatch(userLoginSuccess(response.token, response.id))
     ).catch(error => {
-      console.log('Login failed')
+      console.log('Login failed');
     });
   }
 };
