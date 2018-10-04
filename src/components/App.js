@@ -26,6 +26,15 @@ class App extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const userId = window.localStorage.getItem('userId');
+    const {userProfileFetch} = this.props;
+
+    if (userId) {
+      userProfileFetch(userId);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const {userId, userProfileFetch} = this.props;
 

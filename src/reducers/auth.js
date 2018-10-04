@@ -15,10 +15,13 @@ export default (state = {
         isAuthenticated: true
       };
     case USER_PROFILE_RECEIVED:
+      console.log(state.userId);
+      console.log(action.userId);
       return {
         ...state,
         userData: (state.userId === action.userId && state.userData === null)
-          ? action.userData : state.userData
+          ? action.userData : state.userData,
+        isAuthenticated: (state.userId === action.userId && state.userData === null)
       };
     default:
       return state;
