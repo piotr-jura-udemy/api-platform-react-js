@@ -7,7 +7,7 @@ import {
   BLOG_POST_LIST_REQUEST,
   BLOG_POST_RECEIVED,
   BLOG_POST_REQUEST,
-  BLOG_POST_UNLOAD,
+  BLOG_POST_UNLOAD, COMMENT_ADDED,
   COMMENT_LIST_ERROR,
   COMMENT_LIST_RECEIVED,
   COMMENT_LIST_REQUEST,
@@ -94,6 +94,23 @@ export const commentListFetch = (id) => {
   }
 };
 
+export const commentAdded = (comment) => ({
+  type: COMMENT_ADDED,
+  comment
+});
+
+export const commentAdd = (comment, blogPostId) => {
+  return (dispatch) => {
+    return requests.post(
+      '/comments',
+      {
+        content: comment,
+        blogPost: `/api/blog_posts/${blogPostId}`
+      }
+    ).then(response => dispatch(commentAdded(response)))
+  }
+};
+
 export const userLoginSuccess = (token, userId) => {
   return {
     type: USER_LOGIN_SUCCESS,
@@ -106,7 +123,7 @@ export const userLoginAttempt = (username, password) => {
   return (dispatch) => {
     return requests.post('/login_check', {username, password}, false).then(
       response => dispatch(userLoginSuccess(response.token, response.id))
-    ).catch(error => {
+    ).catch(() => {
       throw new SubmissionError({
         _error: 'Username or password is invalid'
       })
