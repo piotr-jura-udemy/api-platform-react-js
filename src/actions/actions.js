@@ -15,6 +15,7 @@ import {
   USER_LOGIN_SUCCESS, USER_PROFILE_ERROR, USER_PROFILE_RECEIVED, USER_PROFILE_REQUEST, USER_SET_ID
 } from "./constants";
 import {SubmissionError} from "redux-form";
+import {parseApiErrors} from "../apiUtils";
 
 export const blogPostListRequest = () => ({
   type: BLOG_POST_LIST_REQUEST,
@@ -107,7 +108,11 @@ export const commentAdd = (comment, blogPostId) => {
         content: comment,
         blogPost: `/api/blog_posts/${blogPostId}`
       }
-    ).then(response => dispatch(commentAdded(response)))
+    ).then(
+      response => dispatch(commentAdded(response))
+    ).catch(error => {
+      throw new SubmissionError(parseApiErrors(error));
+    })
   }
 };
 
