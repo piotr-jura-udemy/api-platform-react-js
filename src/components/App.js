@@ -37,11 +37,11 @@ class App extends React.Component {
   }
 
   render() {
-    const {isAuthenticated} = this.props;
+    const {isAuthenticated, userData} = this.props;
 
     return (
       <div>
-        <Header isAuthenticated={isAuthenticated}/>
+        <Header isAuthenticated={isAuthenticated} userData={userData}/>
         <Switch>
           <Route path="/login" component={LoginForm}/>
           <Route path="/blog-post/:id" component={BlogPostContainer}/>

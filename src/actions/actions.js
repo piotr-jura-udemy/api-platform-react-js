@@ -126,10 +126,11 @@ export const userProfileError = () => {
   }
 };
 
-export const userProfileReceived = (userData) => {
+export const userProfileReceived = (userId, userData) => {
   return {
     type: USER_PROFILE_RECEIVED,
-    userData
+    userData,
+    userId
   }
 };
 
@@ -137,7 +138,7 @@ export const userProfileFetch = (userId) => {
   return (dispatch) => {
     dispatch(userProfileRequest());
     return requests.get(`/users/${userId}`, true).then(
-      response => dispatch(userProfileReceived(response))
+      response => dispatch(userProfileReceived(userId, response))
     ).catch(error => dispatch(userProfileError()))
   }
 };
