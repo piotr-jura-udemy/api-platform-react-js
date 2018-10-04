@@ -110,7 +110,8 @@ export const commentAdd = (comment, blogPostId) => {
       }
     ).then(
       response => dispatch(commentAdded(response))
-    ).catch(error => {
+    ).catch((error) => {
+      console.log(error);
       throw new SubmissionError(parseApiErrors(error));
     })
   }

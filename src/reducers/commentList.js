@@ -1,4 +1,5 @@
 import {
+  COMMENT_ADDED,
   COMMENT_LIST_ERROR,
   COMMENT_LIST_RECEIVED,
   COMMENT_LIST_REQUEST,
@@ -20,6 +21,11 @@ export default (state = {
         ...state,
         commentList: action.data['hydra:member'],
         isFetching: false
+      };
+    case COMMENT_ADDED:
+      return {
+        ...state,
+        commentList: [action.comment, ...state.commentList]
       };
     case COMMENT_LIST_ERROR:
     case COMMENT_LIST_UNLOAD:
