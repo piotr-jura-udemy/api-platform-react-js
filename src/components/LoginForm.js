@@ -29,10 +29,11 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    const {handleSubmit} = this.props;
+    const {handleSubmit, error} = this.props;
 
     return (
       <div className="text-center">
+        {error && <div className="alert alert-danger">{error}</div>}
         <form className="mt-4" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <Field name="username" label="Username" type="text" component={renderField} />
           <Field name="password" label="Password" type="password" component={renderField} />
