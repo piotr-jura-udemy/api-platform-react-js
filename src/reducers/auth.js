@@ -1,4 +1,4 @@
-import {USER_LOGIN_SUCCESS, USER_PROFILE_RECEIVED} from "../actions/constants";
+import {USER_LOGIN_SUCCESS, USER_PROFILE_RECEIVED, USER_SET_ID} from "../actions/constants";
 
 export default (state = {
   token: null,
@@ -14,9 +14,16 @@ export default (state = {
         userId: action.userId,
         isAuthenticated: true
       };
+    case USER_SET_ID:
+      return {
+        ...state,
+        userId: action.userId,
+        isAuthenticated: true
+      };
     case USER_PROFILE_RECEIVED:
       console.log(state.userId);
       console.log(action.userId);
+      console.log(state.userData);
       return {
         ...state,
         userData: (state.userId === action.userId && state.userData === null)
