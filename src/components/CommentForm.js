@@ -10,8 +10,8 @@ const mapDispatchToProps = {
 
 class CommentForm extends React.Component {
   onSubmit(values) {
-    const {commentAdd, blogPostId} = this.props;
-    return commentAdd(values.content, blogPostId);
+    const {commentAdd, blogPostId, reset} = this.props;
+    return commentAdd(values.content, blogPostId).then(() => reset());
   }
 
   render() {
@@ -21,7 +21,8 @@ class CommentForm extends React.Component {
       <div className="card mb-3 mt-3 shadow-sm">
         <div className="card-body">
           <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-            <Field name="content" label="Type your comment:" type="textarea" component={renderField}/>
+            <Field name="content" label="Type your comment:"
+                   type="textarea" component={renderField}/>
             <button type="submit" className="btn btn-primary btn-big btn-block"
                     disabled={submitting}>
               Add Comment
