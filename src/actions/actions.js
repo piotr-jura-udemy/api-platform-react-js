@@ -117,6 +117,9 @@ export const commentAdd = (comment, blogPostId) => {
     ).then(
       response => dispatch(commentAdded(response))
     ).catch((error) => {
+      if (401 === error.response.status) {
+        return dispatch(userLogout());
+      }
       throw new SubmissionError(parseApiErrors(error));
     })
   }
