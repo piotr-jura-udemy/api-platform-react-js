@@ -117,7 +117,6 @@ export const commentAdd = (comment, blogPostId) => {
     ).then(
       response => dispatch(commentAdded(response))
     ).catch((error) => {
-      console.log(error);
       throw new SubmissionError(parseApiErrors(error));
     })
   }
@@ -162,9 +161,10 @@ export const userProfileRequest = () => {
   }
 };
 
-export const userProfileError = () => {
+export const userProfileError = (userId) => {
   return {
-    type: USER_PROFILE_ERROR
+    type: USER_PROFILE_ERROR,
+    userId
   }
 };
 
@@ -181,7 +181,7 @@ export const userProfileFetch = (userId) => {
     dispatch(userProfileRequest());
     return requests.get(`/users/${userId}`, true).then(
       response => dispatch(userProfileReceived(userId, response))
-    ).catch(error => dispatch(userProfileError()))
+    ).catch(() => dispatch(userProfileError(userId)))
   }
 };
 
