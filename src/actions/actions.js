@@ -14,6 +14,7 @@ import {
   COMMENT_LIST_RECEIVED,
   COMMENT_LIST_REQUEST,
   COMMENT_LIST_UNLOAD,
+  USER_CONFIRMATION_SUCCESS,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
   USER_PROFILE_ERROR,
@@ -169,6 +170,24 @@ export const userRegister = (username, password, retypedPassword, email, name) =
       .then(() => dispatch(userRegisterSuccess()))
       .catch(error => {
         throw new SubmissionError(parseApiErrors(error));
+      });
+  }
+};
+
+export const userConfirmationSuccess = () => {
+  return {
+    type: USER_CONFIRMATION_SUCCESS
+  }
+};
+
+export const userConfirm = (confirmationToken) => {
+  return (dispatch) => {
+    return requests.post('/users/confirm', {confirmationToken}, false)
+      .then(() => dispatch(userConfirmationSuccess()))
+      .catch(error => {
+        throw new SubmissionError({
+          _error: 'Confirmation token is invalid'
+        });
       });
   }
 };
