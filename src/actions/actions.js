@@ -1,7 +1,6 @@
 import {requests} from "../agent";
 import {
   BLOG_POST_ERROR,
-  BLOG_POST_LIST_ADD,
   BLOG_POST_LIST_ERROR,
   BLOG_POST_LIST_RECEIVED,
   BLOG_POST_LIST_REQUEST,
@@ -14,12 +13,16 @@ import {
   COMMENT_LIST_RECEIVED,
   COMMENT_LIST_REQUEST,
   COMMENT_LIST_UNLOAD,
+  IMAGE_UPLOAD_ERROR,
+  IMAGE_UPLOAD_REQUEST,
+  IMAGE_UPLOADED,
   USER_CONFIRMATION_SUCCESS,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
   USER_PROFILE_ERROR,
   USER_PROFILE_RECEIVED,
-  USER_PROFILE_REQUEST, USER_REGISTER_COMPLETE,
+  USER_PROFILE_REQUEST,
+  USER_REGISTER_COMPLETE,
   USER_REGISTER_SUCCESS,
   USER_SET_ID
 } from "./constants";
@@ -254,5 +257,33 @@ export const userProfileFetch = (userId) => {
     return requests.get(`/users/${userId}`, true).then(
       response => dispatch(userProfileReceived(userId, response))
     ).catch(() => dispatch(userProfileError(userId)))
+  }
+};
+
+export const imageUploaded = (data) => {
+  return {
+    type: IMAGE_UPLOADED,
+    image: data
+  }
+};
+
+export const imageUploadRequest = () => {
+  return {
+    type: IMAGE_UPLOAD_REQUEST,
+  }
+};
+
+export const imageUploadError = () => {
+  return {
+    type: IMAGE_UPLOAD_ERROR,
+  }
+};
+
+export const imageUpload = (file) => {
+  return (dispatch) => {
+    dispatch(imageUploadRequest());
+    return requests.upload('/images', file)
+      .then(response => dispatch(imageUploaded(response)))
+      .catch(() => dispatch(imageUploadError))
   }
 };
