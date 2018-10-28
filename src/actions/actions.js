@@ -1,6 +1,6 @@
 import {requests} from "../agent";
 import {
-  BLOG_POST_ERROR,
+  BLOG_POST_ERROR, BLOG_POST_FORM_UNLOAD,
   BLOG_POST_LIST_ERROR,
   BLOG_POST_LIST_RECEIVED,
   BLOG_POST_LIST_REQUEST,
@@ -84,14 +84,15 @@ export const blogPostFetch = (id) => {
   }
 };
 
-export const blogPostAdd = (title, content) => {
+export const blogPostAdd = (title, content, images = []) => {
   return (dispatch) => {
     return requests.post(
       '/blog_posts',
       {
         title,
         content,
-        slug: title && title.replace(/ /g, "-").toLowerCase()
+        slug: title && title.replace(/ /g, "-").toLowerCase(),
+        images: images.map(image => `/api/images/${image.id}`)
       }
     ).catch((error) => {
       if (401 === error.response.status) {
@@ -105,6 +106,10 @@ export const blogPostAdd = (title, content) => {
     })
   }
 };
+
+export const blogPostFormUnload = () => ({
+  type: BLOG_POST_FORM_UNLOAD
+});
 
 export const commentListRequest = () => ({
   type: COMMENT_LIST_REQUEST,

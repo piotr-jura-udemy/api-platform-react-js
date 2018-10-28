@@ -6,7 +6,6 @@ export class ImageBrowser extends React.Component {
 
     return (
       <div className="row mt-4 mb-4">
-        Nothing here yet!
         {
           images.map(image => {
             return (
