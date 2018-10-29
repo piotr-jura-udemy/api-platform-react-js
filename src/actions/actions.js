@@ -12,7 +12,7 @@ import {
   COMMENT_LIST_ERROR,
   COMMENT_LIST_RECEIVED,
   COMMENT_LIST_REQUEST,
-  COMMENT_LIST_UNLOAD,
+  COMMENT_LIST_UNLOAD, IMAGE_DELETED,
   IMAGE_UPLOAD_ERROR,
   IMAGE_UPLOAD_REQUEST,
   IMAGE_UPLOADED,
@@ -295,6 +295,14 @@ export const imageUpload = (file) => {
 
 export const imageDelete = (id) => {
   return (dispatch) => {
-    return requests.delete(`/images/${id}`);
+    return requests.delete(`/images/${id}`)
+      .then(() => dispatch(imageDeleted(id)));
+  }
+};
+
+export const imageDeleted = (id) => {
+  return {
+    type: IMAGE_DELETED,
+    imageId: id
   }
 };
