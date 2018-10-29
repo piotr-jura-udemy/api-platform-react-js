@@ -3,7 +3,7 @@ import {CSSTransition, TransitionGroup} from "react-transition-group";
 
 export class ImageBrowser extends React.Component {
   render() {
-    const {images, deleteHandler} = this.props;
+    const {images, deleteHandler, isLocked} = this.props;
 
     return (
       <div className="row mt-4 mb-4">
@@ -24,7 +24,8 @@ export class ImageBrowser extends React.Component {
                     <div className="mb-2">
                       <button type="button"
                               className="btn btn-outline-danger btn-sm"
-                              onClick={onImageDeleteClick}>Remove</button>
+                              onClick={onImageDeleteClick}
+                              disabled={isLocked}>Remove</button>
                     </div>
                   </div>
                 </CSSTransition>
