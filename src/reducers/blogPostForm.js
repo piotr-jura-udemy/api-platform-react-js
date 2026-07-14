@@ -39,6 +39,11 @@ export default (state = {
         images: state.images.filter(image => image.id !== action.imageId),
         imageReqInProgress: false
       };
+    case 'IMAGE_UPLOAD_PROGRESS':
+      console.log(action.percent);
+      return {
+        ...state,
+      };
     default:
       return state;
   }

@@ -1,6 +1,7 @@
 import {requests} from "../agent";
 import {
-  BLOG_POST_ERROR, BLOG_POST_FORM_UNLOAD,
+  BLOG_POST_ERROR,
+  BLOG_POST_FORM_UNLOAD,
   BLOG_POST_LIST_ERROR,
   BLOG_POST_LIST_RECEIVED,
   BLOG_POST_LIST_REQUEST,
@@ -12,7 +13,9 @@ import {
   COMMENT_LIST_ERROR,
   COMMENT_LIST_RECEIVED,
   COMMENT_LIST_REQUEST,
-  COMMENT_LIST_UNLOAD, IMAGE_DELETE_REQUEST, IMAGE_DELETED,
+  COMMENT_LIST_UNLOAD,
+  IMAGE_DELETE_REQUEST,
+  IMAGE_DELETED,
   IMAGE_UPLOAD_ERROR,
   IMAGE_UPLOAD_REQUEST,
   IMAGE_UPLOADED,
@@ -284,10 +287,19 @@ export const imageUploadError = () => {
   }
 };
 
+export const imageUploadProgress = (percent) => {
+  return {
+    type: 'IMAGE_UPLOAD_PROGRESS',
+    percent
+  }
+};
+
 export const imageUpload = (file) => {
   return (dispatch) => {
     dispatch(imageUploadRequest());
-    return requests.upload('/images', file)
+    return requests.upload('/images', file, (progress) => {
+      dispatch(imageUploadProgress(progress));
+    })
       .then(response => dispatch(imageUploaded(response)))
       .catch(() => dispatch(imageUploadError))
   }
